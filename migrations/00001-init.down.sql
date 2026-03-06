@@ -1,0 +1,16 @@
+DROP TABLE IF EXISTS logs;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS user_commands;
+DROP TABLE IF EXISTS message_files;
+DROP TABLE IF EXISTS reply_keyboard_buttons;
+DROP TABLE IF EXISTS keyboard_buttons;
+DROP TABLE IF EXISTS files;
+DROP TABLE IF EXISTS categories;
+DROP TABLE IF EXISTS settings;
+DROP TABLE IF EXISTS settings_menu;
+DROP TABLE IF EXISTS reply_keyboards;
+DROP TABLE IF EXISTS keyboards;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS commands;
+DROP TABLE IF EXISTS bots;
+DROP TABLE IF EXISTS admins;
