@@ -1,13 +1,13 @@
 -- ####### MAIN ENTITIES #######
 
-CREATE TABLE IF NOT EXISTS admins (
+CREATE TABLE admins (
     id INTEGER PRIMARY KEY,
     username TEXT UNIQUE NOT NULL,
     password_hash TEXT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS bots (
+CREATE TABLE bots (
     id INTEGER PRIMARY KEY,
     token TEXT UNIQUE NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS bots (
 
 -- ####### BOT-RELATED ENTITIES #######
 
-CREATE TABLE IF NOT EXISTS commands (
+CREATE TABLE commands (
     id INTEGER PRIMARY KEY,
     bot_id INTEGER NOT NULL,
     name TEXT UNIQUE NOT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS commands (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE messages (
     id INTEGER PRIMARY KEY,
     command_id INTEGER NOT NULL,
     text TEXT,
@@ -32,14 +32,14 @@ CREATE TABLE IF NOT EXISTS messages (
     FOREIGN KEY (command_id) REFERENCES commands(id)
 );
 
-CREATE TABLE IF NOT EXISTS keyboards (
+CREATE TABLE keyboards (
     id INTEGER PRIMARY KEY,
     message_id INTEGER NOT NULL,
     name TEXT NOT NULL,
     FOREIGN KEY (message_id) REFERENCES messages(id)
 );
 
-CREATE TABLE IF NOT EXISTS reply_keyboards (
+CREATE TABLE reply_keyboards (
     id INTEGER PRIMARY KEY,
     message_id INTEGER NOT NULL,
     name TEXT NOT NULL,
@@ -48,14 +48,14 @@ CREATE TABLE IF NOT EXISTS reply_keyboards (
 
 -- ####### SETTINGS #######
 
-CREATE TABLE IF NOT EXISTS settings_menu (
+CREATE TABLE settings_menu (
     id INTEGER PRIMARY KEY,
     bot_id INTEGER NOT NULL,
     name TEXT NOT NULL,
     FOREIGN KEY (bot_id) REFERENCES bots(id)
 );
 
-CREATE TABLE IF NOT EXISTS settings (
+CREATE TABLE settings (
     id INTEGER PRIMARY KEY,
     menu_id INTEGER NOT NULL,
     key TEXT UNIQUE NOT NULL,
@@ -66,12 +66,12 @@ CREATE TABLE IF NOT EXISTS settings (
 
 -- ####### FILE MANAGEMENT #######
 
-CREATE TABLE IF NOT EXISTS categories (
+CREATE TABLE categories (
     id INTEGER PRIMARY KEY,
     name TEXT UNIQUE NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS files (
+CREATE TABLE files (
     id INTEGER PRIMARY KEY,
     name TEXT NOT NULL,
     storage_key TEXT NOT NULL,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS files (
 
 -- ####### RELATION TABLES #######
 
-CREATE TABLE IF NOT EXISTS keyboard_buttons (
+CREATE TABLE keyboard_buttons (
     id INTEGER PRIMARY KEY,
     keyboard_id INTEGER NOT NULL,
     text TEXT NOT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS keyboard_buttons (
     FOREIGN KEY (keyboard_id) REFERENCES keyboards(id)
 );
 
-CREATE TABLE IF NOT EXISTS reply_keyboard_buttons (
+CREATE TABLE reply_keyboard_buttons (
     id INTEGER PRIMARY KEY,
     keyboard_id INTEGER NOT NULL,
     text TEXT NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE IF NOT EXISTS reply_keyboard_buttons (
     FOREIGN KEY (keyboard_id) REFERENCES reply_keyboards(id)
 );
 
-CREATE TABLE IF NOT EXISTS message_files (
+CREATE TABLE message_files (
     message_id INTEGER,
     file_id INTEGER,
     PRIMARY KEY (message_id, file_id),
@@ -112,7 +112,7 @@ CREATE TABLE IF NOT EXISTS message_files (
     FOREIGN KEY (file_id) REFERENCES files(id)
 );
 
-CREATE TABLE IF NOT EXISTS user_commands (
+CREATE TABLE user_commands (
     id INTEGER PRIMARY KEY,
     user_id INTEGER NOT NULL,
     command_id INTEGER NOT NULL,
@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS user_commands (
 
 -- ####### USERS #######
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE users (
     id INTEGER PRIMARY KEY,
     telegram_id INTEGER UNIQUE NOT NULL,
     username TEXT,
@@ -131,7 +131,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS logs (
+CREATE TABLE logs (
     id INTEGER PRIMARY KEY,
     user_id INTEGER,
     command_id INTEGER,
