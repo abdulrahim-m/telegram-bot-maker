@@ -4,9 +4,6 @@ import (
 	"database/sql"
 	"log"
 
-	"github.com/golang-migrate/migrate/v4"
-	"github.com/golang-migrate/migrate/v4/database/sqlite3"
-	_ "github.com/golang-migrate/migrate/v4/source/file"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -21,7 +18,7 @@ func NewSQLiteStorage() *SQLiteStorage {
 }
 
 func initDb() *sql.DB {
-	db, err := sql.Open("sqlite3", "bot.db")
+	db, err := sql.Open("sqlite3", "storage/data.db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -31,20 +28,18 @@ func initDb() *sql.DB {
 		log.Fatal(err)
 	}
 
-	driver, err := sqlite3.WithInstance(db, &sqlite3.Config{})
-	if err != nil {
-		log.Fatal(err)
+	for _, script := range Tables {
+		_, err = db.Exec(script)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
-	m, err := migrate.NewWithDatabaseInstance(
-		"file://migrations",
-		"sqlite3", driver)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
-		log.Fatal(err)
+	for _, script := range Indices {
+		_, err = db.Exec(script)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	return db
