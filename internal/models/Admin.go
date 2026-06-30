@@ -17,3 +17,8 @@ type Admin struct {
 	Role      AdminRole `db:"role"`
 	CreatedAt time.Time `db:"created_at"`
 }
+type Session struct {
+	SessionID string    `db:"session_id"`
+	AdminID   int64     `db:"admin_id"`
+	ExpieryAt time.Time `db:"expiery_at"`
+}

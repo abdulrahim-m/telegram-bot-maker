@@ -25,9 +25,16 @@ const (
 		CREATE TABLE IF NOT EXISTS admins (
 			id INTEGER PRIMARY KEY,
 			username TEXT UNIQUE NOT NULL,
-			password_hash TEXT NOT NULL,
+			password TEXT NOT NULL,
 			role TEXT NOT NULL,
 			created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+		);
+	`
+	TableSessions = `
+		CREATE TABLE IF NOT EXISTS sessions (
+			session_id TEXT UNIQUE NOT NULL,
+			admin_id INTEGER UNIQUE NOT NULL,
+			expiry_at DATETIME NOT NULL
 		);
 	`
 	TableBots = `
