@@ -17,3 +17,7 @@ func NewAdminRepo(db sqlx.DB, table string) *AdminRepo {
 		},
 	}
 }
+
+func (a *AdminRepo) FindByUsername(username string) (*models.Admin, error) {
+	return a.FindByField("username", username)
+}
